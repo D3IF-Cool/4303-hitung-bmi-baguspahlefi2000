@@ -12,10 +12,17 @@
         <action
             android:id="@+id/action_hitungFragment_to_saranFragment"
             app:destination="@id/saranFragment" />
+        <argument
+            android:name="kategori"
+            app:argType="org.d3if4064.hitungbmi.data.KategoriBmi" />
     </fragment>
     <fragment
         android:id="@+id/saranFragment"
         android:name="org.d3if4064.hitungbmi.ui.SaranFragment"
         android:label="SaranFragment"
-        tools:layout="@layout/fragment_saran"/>
+        tools:layout="@layout/fragment_saran">
+        <argument
+            android:name="kategori"
+            app:argType="org.d3if4064.hitungbmi.data.KategoriBmi" />
+    </fragment>
 </navigation>
