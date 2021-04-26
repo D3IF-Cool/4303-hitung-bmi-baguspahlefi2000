@@ -160,7 +160,7 @@
             app:layout_constraintEnd_toStartOf="@+id/shareButton"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/kategoriTextView"
+            app:layout_constraintTop_toBottomOf="@+id/kategoriTextView"/>
 
         <Button
             android:id="@+id/shareButton"
