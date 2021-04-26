@@ -8,15 +8,22 @@ import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import org.d3if4064.hitungbmi.R
 import org.d3if4064.hitungbmi.data.KategoriBmi
 import org.d3if4064.hitungbmi.databinding.FragmentHitungBinding
+import org.d3if4064.hitungbmi.db.BmiDb
 
 class HitungFragment : Fragment() {
-    private val viewModel: HitungViewModel by viewModels()
+    private val viewModel: HitungViewModel by lazy {
+        val db = BmiDb.getInstance(requireContext())
+        val factory = HitungViewModelFactory(db.dao)
+        ViewModelProvider(this, factory).get(HitungViewModel::class.java)
+    }
+
     private lateinit var binding: FragmentHitungBinding
     private lateinit var kategoriBmi: KategoriBmi
 
@@ -35,6 +42,10 @@ class HitungFragment : Fragment() {
             findNavController().navigate(HitungFragmentDirections
                     .actionHitungFragmentToSaranFragment(it))
             viewModel.selesaiNavigasi()
+        })
+        viewModel.data.observe(viewLifecycleOwner, {
+            if (it == null) return@observe
+            Log.d("HitungFragment", "Data tersimpan. ID = ${it.id}")
         })
 
 
