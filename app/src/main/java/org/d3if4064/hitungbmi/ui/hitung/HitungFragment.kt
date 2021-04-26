@@ -1,4 +1,4 @@
-package org.d3if4064.hitungbmi.ui
+package org.d3if4064.hitungbmi.ui.hitung
 
 import android.content.Intent
 import android.os.Bundle
@@ -23,20 +23,21 @@ class HitungFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentHitungBinding.inflate(layoutInflater, container, false)
         binding.button.setOnClickListener { hitungBmi() }
-        binding.saranButton.setOnClickListener { view: View ->
-            view.findNavController().navigate(
-                    HitungFragmentDirections.
-                    actionHitungFragmentToSaranFragment(kategoriBmi)
-
-
-            )
-        }
+        binding.saranButton.setOnClickListener { viewModel.mulaiNavigasi() }
         binding.shareButton.setOnClickListener { shareData() }
         setHasOptionsMenu(true)
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.getNavigasi().observe(viewLifecycleOwner, {
+            if (it == null) return@observe
+            findNavController().navigate(HitungFragmentDirections
+                    .actionHitungFragmentToSaranFragment(it))
+            viewModel.selesaiNavigasi()
+        })
+
+
         viewModel.getHasilBmi().observe(viewLifecycleOwner, {
             if (it == null) return@observe
             binding.bmiTextView.text = getString(R.string.bmi_x, it.bmi)
